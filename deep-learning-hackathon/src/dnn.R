@@ -1,6 +1,6 @@
 # Data Import
-df = read.csv("C:/Users/ishihara/Google ドライブ/_Files_/稗方研究室/161103DLH/Data/data.csv", header = F)
-newdata = read.csv("C:/Users/ishihara/Google ドライブ/_Files_/稗方研究室/161103DLH/Data/new.csv", header = F)
+df = read.csv("../data/data.csv", header = F)
+newdata = read.csv("../data/new.csv", header = F)
 correct = c(1,1,1,0,0,1,0,1,0,0,1,0,1,0,1,1,0,1,1,1)
 
 # Library Import
@@ -39,4 +39,3 @@ for (i in 1:100) {
   recall = c(recall, res[4]/(res[3] + res[4]))
   # f_value = c(f_value, 2*precision*recall/(precision+recall))
 }
-

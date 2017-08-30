@@ -1,6 +1,6 @@
 # Data Import
-df = read.csv("C:/Users/ishihara/Google ドライブ/_Files_/稗方研究室/161103DLH/Data/data.csv", header = F)
-newdata = read.csv("C:/Users/ishihara/Google ドライブ/_Files_/稗方研究室/161103DLH/Data/new.csv", header = F)
+df = read.csv("../data/data.csv", header = F)
+newdata = read.csv("../data/new.csv", header = F)
 
 for (j in 1:20) {
   minus <- function(x) {return (x - newdata[j, -1])}

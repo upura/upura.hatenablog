@@ -1,5 +1,5 @@
 # Data Import
-df = read.csv("C:/Users/ishihara/Google ƒhƒ‰ƒCƒu/_Files_/•B•ûŒ¤‹†º/161103DLH/Data/data.csv", header = F)
+df = read.csv("../data/data.csv", header = F)
 
 # Data Edit
 
