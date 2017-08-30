@@ -1,6 +1,7 @@
 library(RMeCab)
 
-result <- RMeCabFreq("C:/Users/ishihara/Google ドライブ/Workspace/nikkei.txt")
+setwd("C:/Users/") # 作業ディレクトリ
+result <- RMeCabFreq("rawdata/nikkei.txt")
 result = result[order(-result$Freq),]
 
 result <- result[result[, 2] == "名詞" & result[, 3] == "一般" & result[, 4] > 50, ] 
