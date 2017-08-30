@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Fri Aug 11 13:40:00 2017
-
-@author: ishihara
 """
 
 from chainer import datasets

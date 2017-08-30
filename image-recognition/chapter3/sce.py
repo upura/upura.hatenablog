@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sat Jul 22 14:23:26 2017
-
-@author: ishihara
 """
 import matplotlib.pyplot as plt
 from sklearn import datasets
