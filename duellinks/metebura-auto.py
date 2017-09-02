@@ -41,9 +41,9 @@ def can_fusion(first_hand):
     else:
         return False
 
-deck_list_init()
-first_hand = first_hand_init()
-if can_fusion(first_hand):
-    print("Fusion Success")
-else:
-    print("Failure")
+def duel():
+    deck_list_init()
+    first_hand = first_hand_init()
+    return can_fusion(first_hand)
+
+print(duel())
