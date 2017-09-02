@@ -35,9 +35,13 @@ def can_fusion(first_hand):
     elif "RED_EYES" in first_hand:
         if ("METEO_DRAGON" in first_hand) or ("FUSION_SUPPORT" in first_hand):
             return True
+        else:
+            return False
     elif "METEO_DRAGON" in first_hand:
         if ("RED_EYES" in first_hand) or ("FUSION_SUPPORT" in first_hand):
             return True
+        else:
+            return False
     else:
         return False
 
@@ -46,4 +50,11 @@ def duel():
     first_hand = first_hand_init()
     return can_fusion(first_hand)
 
-print(duel())
+def calc_prob():
+    DUEL_NUM = 100000
+    duel_result = []
+    for duel_index in range(DUEL_NUM):
+        duel_result.append(duel())
+    print("Fusion Success Probability:" + str(sum(duel_result)/DUEL_NUM))
+
+calc_prob()
