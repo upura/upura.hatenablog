@@ -8,12 +8,18 @@ import random
 
 # deck_list
 deck_list = []
-card_list = {"FUSION_CARD":6,
-             "THUNDER_DRAGON":3,
-             "RED_EYES":3,
-             "METEO_DRAGON":2,
-             "SUMMONER":3,
-             "FUSION_SUPPORT":3}
+FUSION_CARD_NUM = 6
+THUNDER_DRAGON_NUM = 3
+RED_EYES_NUM = 3
+METEO_DRAGON_NUM = 2
+SUMMONER_NUM = 3
+FUSION_SUPPORT_NUM = 3
+card_list = {"FUSION_CARD": FUSION_CARD_NUM,
+             "THUNDER_DRAGON": THUNDER_DRAGON_NUM,
+             "RED_EYES": RED_EYES_NUM,
+             "METEO_DRAGON": METEO_DRAGON_NUM,
+             "SUMMONER": SUMMONER_NUM,
+             "FUSION_SUPPORT": FUSION_SUPPORT_NUM}
 
 def deck_list_init():
     for card in card_list:
