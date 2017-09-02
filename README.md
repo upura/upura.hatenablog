@@ -9,3 +9,6 @@ Samples for upura.hatenablog(http://upura.hatenablog.com)
 
 ## nlp
 自然言語処理関係
+
+## duellinks
+デュエルリンクス関連
