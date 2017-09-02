@@ -27,5 +27,23 @@ def first_hand_init():
         first_hand_num = 5
     return random.sample(deck_list, first_hand_num)
 
+def can_fusion(first_hand):
+    if "FUSION_CARD" not in first_hand:
+        return False
+    elif "THUNDER_DRAGON" in first_hand:
+        return True
+    elif "RED_EYES" in first_hand:
+        if ("METEO_DRAGON" in first_hand) or ("FUSION_SUPPORT" in first_hand):
+            return True
+    elif "METEO_DRAGON" in first_hand:
+        if ("RED_EYES" in first_hand) or ("FUSION_SUPPORT" in first_hand):
+            return True
+    else:
+        return False
+
 deck_list_init()
 first_hand = first_hand_init()
+if can_fusion(first_hand):
+    print("Fusion Success")
+else:
+    print("Failure")
