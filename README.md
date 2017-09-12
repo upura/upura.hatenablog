@@ -12,3 +12,6 @@ Samples for upura.hatenablog(http://upura.hatenablog.com)
 
 ## duellinks
 デュエルリンクス関連
+
+## time_series
+時系列データ
