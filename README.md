@@ -1,8 +1,8 @@
 # upura.hatenablog
 Samples for upura.hatenablog(http://upura.hatenablog.com)
 
-## books
-書籍の勉強
+## books_sites
+書籍・サイトでの勉強
 
 ## sports
 スポーツ関連のデータ分析など
