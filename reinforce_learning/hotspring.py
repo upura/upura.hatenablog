@@ -73,6 +73,7 @@ def challenge(target_text):
     r = calc_reward(target_text, decided_action)
     q_learning(decided_action, current_status, next_status, r, target_text)
     set_current_status(decided_action)
+    return 1
 
 # Training
 for training in range(1000):
