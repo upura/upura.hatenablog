@@ -119,3 +119,5 @@ ENV/
 
 # Spyder project settings
 
+# Image Folder
+books_sites/image-recognition/hackathon/photos/
