@@ -121,3 +121,4 @@ ENV/
 
 # Image Folder
 books_sites/image-recognition/hackathon/photos/
+books_sites/image-recognition/hackathon/face
