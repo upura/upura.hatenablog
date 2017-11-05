@@ -15,3 +15,6 @@ Samples for upura.hatenablog(http://upura.hatenablog.com)
 
 ## time_series
 時系列データ
+
+## reinforce_learning
+強化学習
