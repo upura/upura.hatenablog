@@ -1,4 +1,3 @@
-# https://pythonprogramming.net/k-means-from-scratch-2-machine-learning-tutorial/?completed=/k-means-from-scratch-machine-learning-tutorial/
 import matplotlib.pyplot as plt
 from matplotlib import style
 style.use('ggplot')
@@ -27,18 +26,18 @@ class K_Means:
         self.tol = tol
         self.max_iter = max_iter
 
-    def fit(self,data):
+    def fit(self, data):
 
         self.centroids = {}
 
-        for i in range(self.k):
-            self.centroids[i] = data[i]
+        for i_class in range(self.k):
+            self.centroids[i_class] = data[i_class]
 
-        for i in range(self.max_iter):
+        for i_iter in range(self.max_iter):
             self.classifications = {}
 
-            for i in range(self.k):
-                self.classifications[i] = []
+            for i_class in range(self.k):
+                self.classifications[i_class] = []
 
             for featureset in data:
                 distances = [np.linalg.norm(featureset-self.centroids[centroid]) for centroid in self.centroids]
@@ -62,7 +61,7 @@ class K_Means:
             if optimized:
                 break
 
-    def predict(self,data):
+    def predict(self, data):
         distances = [np.linalg.norm(data-self.centroids[centroid]) for centroid in self.centroids]
         classification = distances.index(min(distances))
         return classification
