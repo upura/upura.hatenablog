@@ -2,9 +2,12 @@
 
 import sys
 import numpy as np
+"""
+Original:
+http://cielan.hateblo.jp/entry/2016/12/25/193618
+"""
 
-
-def make_data(n):
+def create_data(n):
     """
     優先順位が行ごとにシャッフルされたn次正方行列を生成する
     :param n: 正方行列の次数
@@ -25,14 +28,17 @@ def gale_shapley(a, b):
     :param b: 優先順位行列
     :return: 結果行列
     """
-    single_as = {i for i in range(0, len(a))}  # シングルA
-    single_bs = {i for i in range(0, len(b))}  # シングルB
+    single_as = {i for i in range(len(a))}  # set型の独身集合A
+    single_bs = {i for i in range(len(b))}  # set型の独身集合B
     engaged = np.zeros((len(a), len(b)), dtype=bool)  # 婚約行列
 
     while len(single_as) != 0:
         single_a = single_as.pop()
+        print('独身の男' + str(single_a))
         # 好みのリストを順に走査
-        for target_b in a[single_a, :]:
+        print(a[single_a,:])
+        for target_b in np.argsort(a[single_a, :]):
+            print('ターゲット' + str(target_b))
             if target_b in single_bs:
                 # まだ婚約していなかったらめでたく婚約成立
                 engaged[single_a, target_b] = True
@@ -58,9 +64,9 @@ def gale_shapley(a, b):
 
 if __name__ == '__main__':
     num = int(sys.argv[1])  # 人数はコマンドライン引数から取得
-    men = make_data(num)  # 男性の優先順位生成
+    men = create_data(num)  # 男性の優先順位生成
     print(men)
-    women = make_data(num)  # 女性の優先順位生成
+    women = create_data(num)  # 女性の優先順位生成
     print(women)
     result = gale_shapley(men, women)  # 安定結婚問題を解く
     print(np.transpose(np.where(result)))  # 結果表示
