@@ -7,17 +7,18 @@ Original:
 http://cielan.hateblo.jp/entry/2016/12/25/193618
 """
 
-def create_data(n):
+def create_priority(n, m):
     """
     優先順位が行ごとにシャッフルされたn次正方行列を生成する
-    :param n: 正方行列の次数
+    :param n: 自グループの次数
+    :param m: 相手グループの次数
     :return: 優先順位行列
     """
-    data = np.empty((0, n), int)
-    arr = np.arange(n)
+    data = np.empty([0, m])
+    priority = np.arange(m)
     for i in range(n):
-        np.random.shuffle(arr)
-        data = np.vstack((data, arr))
+        np.random.shuffle(priority)
+        data = np.vstack([data, priority])
     return data
 
 
@@ -34,11 +35,8 @@ def gale_shapley(a, b):
 
     while len(single_as) != 0:
         single_a = single_as.pop()
-        print('独身の男' + str(single_a))
         # 好みのリストを順に走査
-        print(a[single_a,:])
         for target_b in np.argsort(a[single_a, :]):
-            print('ターゲット' + str(target_b))
             if target_b in single_bs:
                 # まだ婚約していなかったらめでたく婚約成立
                 engaged[single_a, target_b] = True
@@ -63,10 +61,12 @@ def gale_shapley(a, b):
 
 
 if __name__ == '__main__':
-    num = int(sys.argv[1])  # 人数はコマンドライン引数から取得
-    men = create_data(num)  # 男性の優先順位生成
+    MEN_NUM = int(sys.argv[1])  # 人数はコマンドライン引数から取得
+    WOMEN_NUM = int(sys.argv[2])  # 人数はコマンドライン引数から取得
+    
+    men = create_priority(MEN_NUM, WOMEN_NUM)  # 男性の優先順位生成
     print(men)
-    women = create_data(num)  # 女性の優先順位生成
+    women = create_priority(WOMEN_NUM, MEN_NUM)  # 女性の優先順位生成
     print(women)
     result = gale_shapley(men, women)  # 安定結婚問題を解く
     print(np.transpose(np.where(result)))  # 結果表示
