@@ -1,4 +1,4 @@
-data <- read.csv("C:\\urawa.csv", row.names = 1)
+data <- read.csv("urawa.csv", row.names = 1, fileEncoding="CP932")
 library(ggplot2)
 library("ggrepel")
 
@@ -16,7 +16,7 @@ g <- g +  geom_point(
   size = 3
 )
 
-g <- g + geom_text_repel()
+g <- g + geom_text_repel(family = "HiraKakuPro-W3")
 g <- g + xlab("Goal For per Game")
 g <- g + ylab("Goal Against per Game")
 
