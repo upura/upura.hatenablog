@@ -3,10 +3,19 @@ library(reshape2)
 library(ggplot2)
 data(PathData)
 
+# VS 鹿島
+# VS 仙台
+# VS 柏
+# VS G大阪
 path <- c(
   "柏木 > 岩波",
-  "森脇 > 興梠 > 宇賀神 > 槙野 > 柏木 > 宇賀神 > 青木 > 武藤",
-  "阿部 > 青木 > ナバウト > 武藤"
+  "森脇 > 興梠 > 興梠 > 宇賀神 > 槙野 > 柏木 > 宇賀神 > 青木 > 武藤",
+  "阿部 > 青木 > ナバウト > 武藤 > 武藤",
+  "宇賀神 > 興梠 > 長澤 > 橋岡",
+  "橋岡 > 興梠 > 武藤 > 長澤 > 長澤",
+  "興梠 > 武藤 > 興梠",
+  "李 > 青木 > 宇賀神 > 武藤 > 興梠",
+  "柏木 > 宇賀神 > 柏木 > マウリシオ > 岩波 > 西川 > 槙野 > マウリシオ > 武藤 > 長澤 > 興梠"
 )
 
 total_conversions <- rep(1, length(path))
@@ -25,15 +34,34 @@ M = markov_model(Data, 'path', 'total_conversions', out_more = TRUE)
 #合計コンバージョンをプロット
 R = merge(H, M$result, by='channel_name')
 
-g <- ggplot(R, aes(x = channel_name, y = total_conversions))
-g <- g + geom_bar(stat = "identity") + theme_gray (base_family = "HiraKakuPro-W3") + labs(title="マルコフ連鎖モデル", x="", y="貢献度")
+## 終点モデル
+g <- ggplot(R, aes(x = channel_name, y = last_touch))
+g <- g + geom_bar(stat = "identity") + theme_gray (base_family = "HiraKakuPro-W3") + labs(title="", x="", y="貢献度")
+g <- g + theme(axis.text=element_text(size=12))
+plot(g)
 
+## 起点モデル
+g <- ggplot(R, aes(x = channel_name, y = first_touch))
+g <- g + geom_bar(stat = "identity") + theme_gray (base_family = "HiraKakuPro-W3") + labs(title="", x="", y="貢献度")
+g <- g + theme(axis.text=element_text(size=12))
+plot(g)
+
+## 起点モデル
+g <- ggplot(R, aes(x = channel_name, y = linear_touch))
+g <- g + geom_bar(stat = "identity") + theme_gray (base_family = "HiraKakuPro-W3") + labs(title="", x="", y="貢献度")
+g <- g + theme(axis.text=element_text(size=12))
+plot(g)
+
+## マルコフ連鎖モデル
+g <- ggplot(R, aes(x = channel_name, y = total_conversions))
+g <- g + geom_bar(stat = "identity") + theme_gray (base_family = "HiraKakuPro-W3") + labs(title="", x="", y="貢献度")
+g <- g + theme(axis.text=element_text(size=12))
 plot(g)
 
 # マルコフ連鎖モデルの掘り下げ
 
 ############## visualizations ##############
-# transition matrix heatmap for "real" data
+## transition matrix heatmap for "real" data
 df_plot_trans <- M$transition_matrix
 
 cols <- c("#e7f0fa", "#c9e2f6", "#95cbee", "#0099dc", "#4ab04a", "#ffd73e", "#eec73a",
@@ -60,8 +88,9 @@ ggplot(df_plot_trans, aes(y = channel_from, x = channel_to, fill = transition_pr
         text = element_text(family = "HiraKakuPro-W3")) +
   ggtitle("Transition matrix heatmap")
 
-# 取り除いた時の影響
-## https://www.lunametrics.com/blog/2016/06/30/marketing-channel-attribution-markov-models-r/
+## 取り除いた時の影響
+### https://www.lunametrics.com/blog/2016/06/30/marketing-channel-attribution-markov-models-r/
 g <- ggplot(M$removal_effects, aes(x = channel_name, y = removal_effects))
 g <- g + geom_bar(stat = "identity") + theme_gray (base_family = "HiraKakuPro-W3") + labs(title="Removal Effects", x="", y="Removal Effects")
+g <- g + theme(axis.text=element_text(size=12))
 plot(g)
