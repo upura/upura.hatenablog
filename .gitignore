@@ -125,3 +125,4 @@ books_sites/image-recognition/hackathon/face
 
 # csv
 *.csv
+*csv.zip
