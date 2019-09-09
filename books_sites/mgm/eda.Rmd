@@ -1,0 +1,121 @@
+---
+title: "Moderated Network Models for Continuous Data"
+output:
+  html_notebook: default
+  pdf_document: default
+---
+
+https://jmbh.github.io//Moderated-Network-Models-for-continuous-data/
+
+```{r}
+library(psych)
+data <- msq[, c("hostile", "lonely", "nervous", "sleepy", "depressed")]
+data <- na.omit(data) # exclude rows with missing values
+
+head(data)
+```
+```{r}
+par(mfrow=c(2,3))
+for(i in 1:5) {
+  barplot(table(data[, i]), axes = FALSE, xlab = "", ylim = c(0, 3000))
+  axis(2, las = 2, c(0, 1000, 2000, 3000))
+  title(main = colnames(data)[i])
+}
+```
+```{r}
+install.packages("mgm")
+```
+
+```{r}
+library(mgm) # 1.1-7
+
+set.seed(1)
+mgm_mod <- mgm(data = data,
+               type = rep("g", 5),
+               level = rep(1, 5),
+               lambdaSel = "CV",
+               ruleReg = "AND",
+               moderators = 5, 
+               threshold = "none", 
+               pbar = FALSE)
+```
+```{r}
+mgm_mod$interactions$indicator
+```
+```{r}
+showInteraction(object = mgm_mod, int = c(1,3))
+```
+```{r}
+showInteraction(object = mgm_mod, int = c(1,3,5))
+```
+```{r}
+tb <- table(scale(data$depressed))
+names(tb) <- round(as.numeric(names(tb)), 2)
+barplot(tb, axes=FALSE, xlab="", ylim=c(0, 3000))
+axis(2, las=2, c(0, 1000, 2000, 3000))
+```
+```{r}
+cond0 <- condition(object = mgm_mod, 
+                   values = list('5' = 0))
+
+cond1 <- condition(object = mgm_mod, 
+                   values = list('5' = 1))
+
+cond2 <- condition(object = mgm_mod, 
+                   values = list('5' = 2))
+```
+
+```{r}
+l_cond <- list(cond0, cond1, cond2)
+
+library(qgraph)
+par(mfrow=c(1,3))
+
+max_val <- max(max(l_cond[[1]]$pairwise$wadj),
+               max(l_cond[[2]]$pairwise$wadj),
+               max(l_cond[[3]]$pairwise$wadj))
+
+for(i in 1:3) qgraph(l_cond[[i]]$pairwise$wadj, layout="circle", 
+                     edge.color=l_cond[[i]]$pairwise$edgecolor, 
+                     labels = colnames(msq_p5), 
+                     maximum = max_val, 
+                     edge.labels = TRUE, edge.label.cex=2,
+                     vsize=20, esize=18, 
+                     title = paste0("Depression = ", (0:2)[i]))
+```
+```{r}
+set.seed(1)
+mgm_mod_all <- mgm(data = data,
+                   type = rep("g", 5),
+                   level = rep(1, 5),
+                   lambdaSel = "CV",
+                   ruleReg = "AND",
+                   moderators = 1:5, 
+                   threshold = "none", 
+                   pbar = FALSE)
+```
+```{r}
+mgm_mod_all$interactions$indicator
+```
+```{r}
+FactorGraph(mgm_mod_all, 
+            labels = colnames(data), 
+            layout = "circle")
+```
+```{r}
+set.seed(1)
+res_obj <- resample(object = mgm_mod, 
+                    data = data, 
+                    nB = 50,
+                    pbar = FALSE)
+```
+
+```{r}
+plotRes(res_obj, 
+        axis.ticks = c(-.1, 0, .1, .2, .3, .4, .5), 
+        axis.ticks.mod = c(-.1, -.05, 0, .05, .1), 
+        cex.label = 1, 
+        labels = colnames(msq_p5), 
+        layout.width.labels = .40)
+```
+
